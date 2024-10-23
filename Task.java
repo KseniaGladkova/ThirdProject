@@ -1,13 +1,7 @@
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class Task {
     private String name;
     private String status;
     private String description;
-    HashMap<Integer, Task> tasks = new HashMap<>();
-    public static final String TASK_CREATED = "Задача создана";
-    AtomicInteger generateID = new AtomicInteger(1);
 
     public Task(String name, String status, String description) {
         this.name = name;
@@ -39,15 +33,8 @@ public class Task {
         this.description = description;
     }
 
-    public void createTask (Task task){
-        int result = generateID.getAndIncrement();
-        generateID = new AtomicInteger(result);
-        tasks.put(result, task);
-        System.out.println(TASK_CREATED);
-        System.out.println(tasks);
-        System.out.println(tasks.size());
+    @Override
+    public String toString() {
+        return "Имя: " + getName() + ". Статус: " + getStatus() + ".  Описание задачи: " + getDescription() + ". ";
     }
-
-
-
 }
