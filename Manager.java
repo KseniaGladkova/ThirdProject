@@ -67,7 +67,7 @@ public class Manager {
                         if (!isNumeric(type)) {
                             System.out.println(PRINT_NUMBER);
                             continue;
-                        } else {
+                        } else { // TODO: убрать лишний else
                             int typeOfTask = Integer.parseInt(type);
                             switch (typeOfTask) {
                                 case 1:
@@ -112,13 +112,13 @@ public class Manager {
                         String typeOfTask = scanner.nextLine();
                         if (!isNumeric(typeOfTask)) {
                             System.out.println(PRINT_NUMBER);
-                        } else {
+                        } else { // TODO: убрать лишний else
                             int typeOf = Integer.parseInt(typeOfTask);
                             System.out.println(PRINT_ID);
                             String taskID = scanner.nextLine();
                             if (!isNumeric(taskID)) {
                                 System.out.println(PRINT_NUMBER);
-                            } else {
+                            } else { // TODO: убрать лишний else
                                 int uniqueNumber = Integer.parseInt(taskID);
                                 switch (typeOf) {
                                     case 1:
@@ -142,13 +142,13 @@ public class Manager {
                         String var = scanner.nextLine();
                         if (!isNumeric(var)) {
                             System.out.println(PRINT_NUMBER);
-                        } else {
+                        } else { // TODO: убрать лишний else
                             int variant = Integer.parseInt(var);
                             System.out.println(PRINT_ID);
                             String uniqID = scanner.nextLine();
                             if (!isNumeric(uniqID)) {
                                 System.out.println(PRINT_NUMBER);
-                            } else {
+                            } else { // TODO: убрать лишний else
                                 int uniqieID = Integer.parseInt(uniqID);
                                 System.out.println(PRINT_NAME);
                                 String newName = scanner.nextLine();
@@ -187,13 +187,13 @@ public class Manager {
                         String point = scanner.nextLine();
                         if (!isNumeric(point)) {
                             System.out.println(PRINT_NUMBER);
-                        } else {
+                        } else { // TODO: убрать лишний else
                             int pointOfMenu = Integer.parseInt(point);
                             System.out.println(PRINT_ID);
                             String deleteID = scanner.nextLine();
                             if (!isNumeric(deleteID)) {
                                 System.out.println(PRINT_NUMBER);
-                            } else {
+                            } else { // TODO: убрать лишний else
                                 int IDForDelete = Integer.parseInt(deleteID);
                                 switch (pointOfMenu) {
                                     case 1:
@@ -260,7 +260,7 @@ public class Manager {
     public void printAllTasks() {
         if (tasks.isEmpty()) {
             System.out.println(TASK_LIST_IS_EMPTY);
-        } else {
+        } else { // TODO: убрать лишний else
             System.out.println(TASKS);
             for (Integer k : tasks.keySet()) {
                 System.out.print(k + ". ");
@@ -272,7 +272,7 @@ public class Manager {
     public void printAllEpics() {
         if (epics.isEmpty()) {
             System.out.println(EPIC_LIST_IS_EMPTY);
-        } else {
+        } else { // TODO: убрать лишний else
             System.out.println(EPICS);
             for (Integer k : epics.keySet()) {
                 System.out.print(k + ". ");
@@ -284,7 +284,7 @@ public class Manager {
     public void printAllSubtasks() {
         if (subtasks.isEmpty()) {
             System.out.println(SUBTASK_LIST_IS_EMPTY);
-        } else {
+        } else { // TODO: убрать лишний else
             System.out.println(SUBTASKS);
             for (Integer k : subtasks.keySet()) {
                 System.out.print(k + ". ");
@@ -294,9 +294,9 @@ public class Manager {
     }
 
     public void printSubtasksForEpic() {
-        for (Epic ep : epics.values()) {
+        for (Epic ep : epics.values()) { // TODO: не сокращай названия переменных - Epic epic (вместо Epic ep)
             System.out.println("Эпику " + ep.getName() + " принадлежат следующие подзадачи: ");
-            for (Integer sudID : ep.getSubtaskID()) {
+            for (Integer sudID : ep.getSubtaskID()) { // TODO: sudID --> subtaskID (subtaskID - понятное название, что такое sudID - непонятно)
                 for (Integer subKey : subtasks.keySet()) {
                     if (Objects.equals(sudID, subKey)) {
                         System.out.print(subKey + ". ");
@@ -310,7 +310,7 @@ public class Manager {
     public void takeTask(int uniqueNumber) {
         if (!tasks.containsKey(uniqueNumber)) {
             System.out.println(NOT_FOUND);
-        } else {
+        } else { // TODO: убрать лишний else
             for (Integer k : tasks.keySet()) {
                 if (Objects.equals(k, uniqueNumber)) {
                     System.out.println(tasks.get(k).toString());
@@ -322,7 +322,7 @@ public class Manager {
     public void takeEpic(int uniqueNumber) {
         if (!epics.containsKey(uniqueNumber)) {
             System.out.println(NOT_FOUND);
-        } else {
+        } else { // TODO: убрать лишний else
             for (Integer k : epics.keySet()) {
                 if (Objects.equals(k, uniqueNumber)) {
                     System.out.println(epics.get(k).toString());
@@ -334,7 +334,7 @@ public class Manager {
     public void takeSubtask(int uniqueNumber) {
         if (!subtasks.containsKey(uniqueNumber)) {
             System.out.println(NOT_FOUND);
-        } else {
+        } else { // TODO: убрать лишний else
             for (Integer k : subtasks.keySet()) {
                 if (Objects.equals(k, uniqueNumber)) {
                     System.out.println(subtasks.get(k).toString());
@@ -346,7 +346,7 @@ public class Manager {
     public void changeTask(int uniqieID, String newName, String newStatus, String newDescription) {
         if (!tasks.containsKey(uniqieID)) {
             System.out.println(NOT_FOUND);
-        } else {
+        } else { // TODO: убрать лишний else
             Task newTask = new Task(newName, newStatus, newDescription);
             tasks.put(uniqieID, newTask);
             System.out.println(TASK_CHANGED);
@@ -356,7 +356,7 @@ public class Manager {
     public void changeSubtask(int uniqieID, String newName, String newStatus, String newDescription, int newEpicID) {
         if (!subtasks.containsKey(uniqieID)) {
             System.out.println(NOT_FOUND);
-        } else {
+        } else { // TODO: убрать лишний else
             Subtask newSubtask = new Subtask(newName, newStatus, newDescription, newEpicID);
             subtasks.put(uniqieID, newSubtask);
             for (Subtask sub : subtasks.values()) {
