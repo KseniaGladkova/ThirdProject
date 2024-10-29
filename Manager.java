@@ -54,175 +54,173 @@ public class Manager {
         while (true) {
             printMenu();
             String command = scanner.nextLine();
-            if (isNumeric(command)) {
-                int comm = Integer.parseInt(command);
-                switch (comm) {
-                    case 1:
-                        System.out.println(PRINT_NAME);
-                        String name = scanner.nextLine();
-                        System.out.println(PRINT_DESCRIPTION);
-                        String description = scanner.nextLine();
-                        System.out.println(PRINT_TYPE_OF_TASK);
-                        String type = scanner.nextLine();
-                        if (!isNumeric(type)) {
-                            System.out.println(PRINT_NUMBER);
-                            continue;
-                        } else { // TODO: убрать лишний else
-                            int typeOfTask = Integer.parseInt(type);
-                            switch (typeOfTask) {
-                                case 1:
-                                    Task task = new Task(name, "NEW", description);
-                                    createTask(task);
-                                    break;
-                                case 2:
-                                    Epic epic = new Epic(name, "NEW", description, new ArrayList<>());
-                                    createEpic(epic);
-                                    break;
-                                case 3:
-                                    System.out.println(CHOOSE_EPIC);
-                                    String numberOdEpic = scanner.nextLine();
-                                    if (!isNumeric(numberOdEpic)) {
-                                        System.out.println(PRINT_NUMBER);
-                                    } else {
-                                        int epicID = Integer.parseInt(numberOdEpic);
-                                        if (!epics.containsKey(epicID)) {
-                                            System.out.println(EPIC_IS_NOT_EXIST);
-                                        } else {
-                                            Subtask subtask = new Subtask(name, "NEW", description, epicID);
-                                            createSubtask(subtask, epicID);
-                                        }
-                                    }
-                                    break;
-                                default:
-                                    System.out.println(NOT_COMMAND);
-                                    break;
-                            }
-                        }
-                        break;
-                    case 2:
-                        printAllTasks();
-                        printAllEpics();
-                        printAllSubtasks();
-                        break;
-                    case 3:
-                        RemoveAllTasks();
-                        break;
-                    case 4:
-                        System.out.println(PRINT_TYPE_OF_TASK);
-                        String typeOfTask = scanner.nextLine();
-                        if (!isNumeric(typeOfTask)) {
-                            System.out.println(PRINT_NUMBER);
-                        } else { // TODO: убрать лишний else
-                            int typeOf = Integer.parseInt(typeOfTask);
-                            System.out.println(PRINT_ID);
-                            String taskID = scanner.nextLine();
-                            if (!isNumeric(taskID)) {
-                                System.out.println(PRINT_NUMBER);
-                            } else { // TODO: убрать лишний else
-                                int uniqueNumber = Integer.parseInt(taskID);
-                                switch (typeOf) {
-                                    case 1:
-                                        takeTask(uniqueNumber);
-                                        break;
-                                    case 2:
-                                        takeEpic(uniqueNumber);
-                                        break;
-                                    case 3:
-                                        takeSubtask(uniqueNumber);
-                                        break;
-                                    default:
-                                        System.out.println(NOT_COMMAND);
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case 5:
-                        System.out.println(CHOOSE_TYPE_FOR_CHANGE);
-                        String var = scanner.nextLine();
-                        if (!isNumeric(var)) {
-                            System.out.println(PRINT_NUMBER);
-                        } else { // TODO: убрать лишний else
-                            int variant = Integer.parseInt(var);
-                            System.out.println(PRINT_ID);
-                            String uniqID = scanner.nextLine();
-                            if (!isNumeric(uniqID)) {
-                                System.out.println(PRINT_NUMBER);
-                            } else { // TODO: убрать лишний else
-                                int uniqieID = Integer.parseInt(uniqID);
-                                System.out.println(PRINT_NAME);
-                                String newName = scanner.nextLine();
-                                System.out.println(PRINT_DESCRIPTION);
-                                String newDescription = scanner.nextLine();
-                                System.out.println(PRINT_STATUS);
-                                String newStatus = scanner.nextLine();
-                                if ((!newStatus.equals("DONE")) && (!newStatus.equals("IN_PROGRESS"))) {
-                                    System.out.println(NOT_FOUND);
-                                } else {
-                                    switch (variant) {
-                                        case 1:
-                                            changeTask(uniqieID, newName, newStatus, newDescription);
-                                            break;
-                                        case 2:
-                                            System.out.println(CHOOSE_EPIC);
-                                            String newEpic = scanner.nextLine();
-                                            if (!isNumeric(newEpic)) {
-                                                System.out.println(PRINT_NUMBER);
-                                            } else {
-                                                int newEpicID = Integer.parseInt(newEpic);
-                                                changeSubtask(uniqieID, newName, newStatus, newDescription, newEpicID);
-                                                break;
-                                            }
-                                            break;
-                                        default:
-                                            System.out.println(NOT_COMMAND);
-                                            break;
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case 6:
-                        menuForDelete();
-                        String point = scanner.nextLine();
-                        if (!isNumeric(point)) {
-                            System.out.println(PRINT_NUMBER);
-                        } else { // TODO: убрать лишний else
-                            int pointOfMenu = Integer.parseInt(point);
-                            System.out.println(PRINT_ID);
-                            String deleteID = scanner.nextLine();
-                            if (!isNumeric(deleteID)) {
-                                System.out.println(PRINT_NUMBER);
-                            } else { // TODO: убрать лишний else
-                                int IDForDelete = Integer.parseInt(deleteID);
-                                switch (pointOfMenu) {
-                                    case 1:
-                                        deleteTask(IDForDelete);
-                                        break;
-                                    case 2:
-                                        deleteSubtask(IDForDelete);
-                                        break;
-                                    case 3:
-                                        deleteEpic(IDForDelete);
-                                        break;
-                                    default:
-                                        System.out.println(NOT_COMMAND);
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case 7:
-                        printSubtasksForEpic();
-                        break;
-                    case 8:
-                        return;
-                    default:
-                        System.out.println(NOT_COMMAND);
-                        break;
-                }
-            } else {
+            if (!isNumeric(command)) {
                 System.out.println(PRINT_NUMBER);
+                continue;
+            }
+            int comm = Integer.parseInt(command);
+            switch (comm) {
+                case 1:
+                    System.out.println(PRINT_NAME);
+                    String name = scanner.nextLine();
+                    System.out.println(PRINT_DESCRIPTION);
+                    String description = scanner.nextLine();
+                    System.out.println(PRINT_TYPE_OF_TASK);
+                    String type = scanner.nextLine();
+                    if (!isNumeric(type)) {
+                        System.out.println(PRINT_NUMBER);
+                        continue;
+                    }
+                    int typeOfTask = Integer.parseInt(type);
+                    switch (typeOfTask) {
+                        case 1:
+                            Task task = new Task(name, "NEW", description);
+                            createTask(task);
+                            break;
+                        case 2:
+                            Epic epic = new Epic(name, "NEW", description, new ArrayList<>());
+                            createEpic(epic);
+                            break;
+                        case 3:
+                            System.out.println(CHOOSE_EPIC);
+                            String numberOdEpic = scanner.nextLine();
+                            if (!isNumeric(numberOdEpic)) {
+                                System.out.println(PRINT_NUMBER);
+                                continue;
+                            }
+                            int epicID = Integer.parseInt(numberOdEpic);
+                            if (!epics.containsKey(epicID)) {
+                                System.out.println(EPIC_IS_NOT_EXIST);
+                                continue;
+                            }
+                            Subtask subtask = new Subtask(name, "NEW", description, epicID);
+                            createSubtask(subtask, epicID);
+                            break;
+                        default:
+                            System.out.println(NOT_COMMAND);
+                            break;
+                    }
+                    break;
+                case 2:
+                    printAllTasks();
+                    printAllEpics();
+                    printAllSubtasks();
+                    break;
+                case 3:
+                    RemoveAllTasks();
+                    break;
+                case 4:
+                    System.out.println(PRINT_TYPE_OF_TASK);
+                    String typeOfTasks = scanner.nextLine();
+                    if (!isNumeric(typeOfTasks)) {
+                        System.out.println(PRINT_NUMBER);
+                        continue;
+                    }
+                    int typeOf = Integer.parseInt(typeOfTasks);
+                    System.out.println(PRINT_ID);
+                    String taskID = scanner.nextLine();
+                    if (!isNumeric(taskID)) {
+                        System.out.println(PRINT_NUMBER);
+                        continue;
+                    }
+                    int uniqueNumber = Integer.parseInt(taskID);
+                    switch (typeOf) {
+                        case 1:
+                            takeTask(uniqueNumber);
+                            break;
+                        case 2:
+                            takeEpic(uniqueNumber);
+                            break;
+                        case 3:
+                            takeSubtask(uniqueNumber);
+                            break;
+                        default:
+                            System.out.println(NOT_COMMAND);
+                            break;
+                    }
+                    break;
+                case 5:
+                    System.out.println(CHOOSE_TYPE_FOR_CHANGE);
+                    String var = scanner.nextLine();
+                    if (!isNumeric(var)) {
+                        System.out.println(PRINT_NUMBER);
+                        continue;
+                    }
+                    int variant = Integer.parseInt(var);
+                    System.out.println(PRINT_ID);
+                    String uniqID = scanner.nextLine();
+                    if (!isNumeric(uniqID)) {
+                        System.out.println(PRINT_NUMBER);
+                        continue;
+                    }
+                    int uniqueID = Integer.parseInt(uniqID);
+                    System.out.println(PRINT_NAME);
+                    String newName = scanner.nextLine();
+                    System.out.println(PRINT_DESCRIPTION);
+                    String newDescription = scanner.nextLine();
+                    System.out.println(PRINT_STATUS);
+                    String newStatus = scanner.nextLine();
+                    if ((!newStatus.equals("DONE")) && (!newStatus.equals("IN_PROGRESS"))) {
+                        System.out.println(NOT_FOUND);
+                        continue;
+                    }
+                    switch (variant) {
+                        case 1:
+                            changeTask(uniqueID, newName, newStatus, newDescription);
+                            break;
+                        case 2:
+                            System.out.println(CHOOSE_EPIC);
+                            String newEpic = scanner.nextLine();
+                            if (!isNumeric(newEpic)) {
+                                System.out.println(PRINT_NUMBER);
+                                continue;
+                            }
+                            int newEpicID = Integer.parseInt(newEpic);
+                            changeSubtask(uniqueID, newName, newStatus, newDescription, newEpicID);
+                            break;
+                        default:
+                            System.out.println(NOT_COMMAND);
+                            break;
+                    }
+                    break;
+                case 6:
+                    menuForDelete();
+                    String point = scanner.nextLine();
+                    if (!isNumeric(point)) {
+                        System.out.println(PRINT_NUMBER);
+                        continue;
+                    }
+                    int pointOfMenu = Integer.parseInt(point);
+                    System.out.println(PRINT_ID);
+                    String deleteID = scanner.nextLine();
+                    if (!isNumeric(deleteID)) {
+                        System.out.println(PRINT_NUMBER);
+                        continue;
+                    }
+                    int IDForDelete = Integer.parseInt(deleteID);
+                    switch (pointOfMenu) {
+                        case 1:
+                            deleteTask(IDForDelete);
+                            break;
+                        case 2:
+                            deleteSubtask(IDForDelete);
+                            break;
+                        case 3:
+                            deleteEpic(IDForDelete);
+                            break;
+                        default:
+                            System.out.println(NOT_COMMAND);
+                            break;
+                    }
+                    break;
+                case 7:
+                    printSubtasksForEpic();
+                    break;
+                case 8:
+                    return;
+                default:
+                    System.out.println(NOT_COMMAND);
+                    break;
             }
         }
     }
@@ -260,47 +258,47 @@ public class Manager {
     public void printAllTasks() {
         if (tasks.isEmpty()) {
             System.out.println(TASK_LIST_IS_EMPTY);
-        } else { // TODO: убрать лишний else
-            System.out.println(TASKS);
-            for (Integer k : tasks.keySet()) {
-                System.out.print(k + ". ");
-                System.out.println(tasks.get(k).toString());
-            }
+            return;
+        }
+        System.out.println(TASKS);
+        for (Integer k : tasks.keySet()) {
+            System.out.print(k + ". ");
+            System.out.println(tasks.get(k).toString());
         }
     }
 
     public void printAllEpics() {
         if (epics.isEmpty()) {
             System.out.println(EPIC_LIST_IS_EMPTY);
-        } else { // TODO: убрать лишний else
-            System.out.println(EPICS);
-            for (Integer k : epics.keySet()) {
-                System.out.print(k + ". ");
-                System.out.println(epics.get(k).toString());
-            }
+            return;
+        }
+        System.out.println(EPICS);
+        for (Integer k : epics.keySet()) {
+            System.out.print(k + ". ");
+            System.out.println(epics.get(k).toString());
         }
     }
 
     public void printAllSubtasks() {
         if (subtasks.isEmpty()) {
             System.out.println(SUBTASK_LIST_IS_EMPTY);
-        } else { // TODO: убрать лишний else
-            System.out.println(SUBTASKS);
-            for (Integer k : subtasks.keySet()) {
-                System.out.print(k + ". ");
-                System.out.println(subtasks.get(k).toString());
-            }
+            return;
+        }
+        System.out.println(SUBTASKS);
+        for (Integer k : subtasks.keySet()) {
+            System.out.print(k + ". ");
+            System.out.println(subtasks.get(k).toString());
         }
     }
 
     public void printSubtasksForEpic() {
-        for (Epic ep : epics.values()) { // TODO: не сокращай названия переменных - Epic epic (вместо Epic ep)
-            System.out.println("Эпику " + ep.getName() + " принадлежат следующие подзадачи: ");
-            for (Integer sudID : ep.getSubtaskID()) { // TODO: sudID --> subtaskID (subtaskID - понятное название, что такое sudID - непонятно)
-                for (Integer subKey : subtasks.keySet()) {
-                    if (Objects.equals(sudID, subKey)) {
-                        System.out.print(subKey + ". ");
-                        System.out.println(subtasks.get(subKey).toString());
+        for (Epic epic : epics.values()) {
+            System.out.println("Эпику " + epic.getName() + " принадлежат следующие подзадачи: ");
+            for (Integer subtaskID : epic.getSubtaskID()) {
+                for (Integer subtaskKey : subtasks.keySet()) {
+                    if (Objects.equals(subtaskID, subtaskKey)) {
+                        System.out.print(subtaskKey + ". ");
+                        System.out.println(subtasks.get(subtaskKey).toString());
                     }
                 }
             }
@@ -310,11 +308,11 @@ public class Manager {
     public void takeTask(int uniqueNumber) {
         if (!tasks.containsKey(uniqueNumber)) {
             System.out.println(NOT_FOUND);
-        } else { // TODO: убрать лишний else
-            for (Integer k : tasks.keySet()) {
-                if (Objects.equals(k, uniqueNumber)) {
-                    System.out.println(tasks.get(k).toString());
-                }
+            return;
+        }
+        for (Integer k : tasks.keySet()) {
+            if (Objects.equals(k, uniqueNumber)) {
+                System.out.println(tasks.get(k).toString());
             }
         }
     }
@@ -322,7 +320,7 @@ public class Manager {
     public void takeEpic(int uniqueNumber) {
         if (!epics.containsKey(uniqueNumber)) {
             System.out.println(NOT_FOUND);
-        } else { // TODO: убрать лишний else
+        } else {
             for (Integer k : epics.keySet()) {
                 if (Objects.equals(k, uniqueNumber)) {
                     System.out.println(epics.get(k).toString());
@@ -334,36 +332,36 @@ public class Manager {
     public void takeSubtask(int uniqueNumber) {
         if (!subtasks.containsKey(uniqueNumber)) {
             System.out.println(NOT_FOUND);
-        } else { // TODO: убрать лишний else
-            for (Integer k : subtasks.keySet()) {
-                if (Objects.equals(k, uniqueNumber)) {
-                    System.out.println(subtasks.get(k).toString());
-                }
+            return;
+        }
+        for (Integer k : subtasks.keySet()) {
+            if (Objects.equals(k, uniqueNumber)) {
+                System.out.println(subtasks.get(k).toString());
             }
         }
     }
 
-    public void changeTask(int uniqieID, String newName, String newStatus, String newDescription) {
-        if (!tasks.containsKey(uniqieID)) {
+    public void changeTask(int uniqueID, String newName, String newStatus, String newDescription) {
+        if (!tasks.containsKey(uniqueID)) {
             System.out.println(NOT_FOUND);
-        } else { // TODO: убрать лишний else
-            Task newTask = new Task(newName, newStatus, newDescription);
-            tasks.put(uniqieID, newTask);
-            System.out.println(TASK_CHANGED);
+            return;
         }
+        Task newTask = new Task(newName, newStatus, newDescription);
+        tasks.put(uniqueID, newTask);
+        System.out.println(TASK_CHANGED);
     }
 
     public void changeSubtask(int uniqieID, String newName, String newStatus, String newDescription, int newEpicID) {
         if (!subtasks.containsKey(uniqieID)) {
             System.out.println(NOT_FOUND);
-        } else { // TODO: убрать лишний else
-            Subtask newSubtask = new Subtask(newName, newStatus, newDescription, newEpicID);
-            subtasks.put(uniqieID, newSubtask);
-            for (Subtask sub : subtasks.values()) {
-                for (Integer k : epics.keySet()) {
-                    if (Objects.equals(sub.getEpicID(), k)) {
-                        changeEpic(epics.get(k));
-                    }
+            return;
+        }
+        Subtask newSubtask = new Subtask(newName, newStatus, newDescription, newEpicID);
+        subtasks.put(uniqieID, newSubtask);
+        for (Subtask sub : subtasks.values()) {
+            for (Integer k : epics.keySet()) {
+                if (Objects.equals(sub.getEpicID(), k)) {
+                    changeEpic(epics.get(k));
                 }
             }
         }
