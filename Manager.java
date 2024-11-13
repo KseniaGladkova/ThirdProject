@@ -351,13 +351,13 @@ public class Manager {
         System.out.println(TASK_CHANGED);
     }
 
-    public void changeSubtask(int uniqieID, String newName, String newStatus, String newDescription, int newEpicID) {
-        if (!subtasks.containsKey(uniqieID)) {
+    public void changeSubtask(int uniqueID, String newName, String newStatus, String newDescription, int newEpicID) {
+        if (!subtasks.containsKey(uniqueID)) {
             System.out.println(NOT_FOUND);
             return;
         }
         Subtask newSubtask = new Subtask(newName, newStatus, newDescription, newEpicID);
-        subtasks.put(uniqieID, newSubtask);
+        subtasks.put(uniqueID, newSubtask);
         for (Subtask sub : subtasks.values()) {
             for (Integer k : epics.keySet()) {
                 if (Objects.equals(sub.getEpicID(), k)) {
