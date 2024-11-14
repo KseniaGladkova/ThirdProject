@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        Manager manager = new Manager();
+        InMemoryTaskManager manager = new InMemoryTaskManager();
         manager.runApp();
     }
 }
