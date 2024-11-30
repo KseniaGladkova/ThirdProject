@@ -9,18 +9,18 @@ public class InMemoryTaskManager implements TaskManager {
     HashMap<Integer, Subtask> subtasks = new HashMap<>();
     HashMap<Integer, Epic> epics = new HashMap<>();
     InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
-    public int generateID = 1;
+    public int generateId = 1;
 
     public void runApp() {
         while (true) {
             printMenu();
-            String command = scanner.nextLine();
-            if (!isNumeric(command)) {
+            String comm = scanner.nextLine();
+            if (!isNumeric(comm)) {
                 System.out.println(Constants.PRINT_NUMBER);
                 continue;
             }
-            int comm = Integer.parseInt(command);
-            switch (comm) {
+            int command = Integer.parseInt(comm);
+            switch (command) {
                 case 1:
                     System.out.println(Constants.PRINT_NAME);
                     String name = scanner.nextLine();
@@ -44,18 +44,18 @@ public class InMemoryTaskManager implements TaskManager {
                             break;
                         case 3:
                             System.out.println(Constants.CHOOSE_EPIC);
-                            String numberOdEpic = scanner.nextLine();
-                            if (!isNumeric(numberOdEpic)) {
+                            String numberOfEpic = scanner.nextLine();
+                            if (!isNumeric(numberOfEpic)) {
                                 System.out.println(Constants.PRINT_NUMBER);
                                 continue;
                             }
-                            int epicID = Integer.parseInt(numberOdEpic);
-                            if (!epics.containsKey(epicID)) {
+                            int epicId = Integer.parseInt(numberOfEpic);
+                            if (!epics.containsKey(epicId)) {
                                 System.out.println(Constants.EPIC_IS_NOT_EXIST);
                                 continue;
                             }
-                            Subtask subtask = new Subtask(name, Status.NEW, description, epicID);
-                            createSubtask(subtask, epicID);
+                            Subtask subtask = new Subtask(name, Status.NEW, description, epicId);
+                            createSubtask(subtask, epicId);
                             break;
                         default:
                             System.out.println(Constants.NOT_COMMAND);
@@ -68,7 +68,7 @@ public class InMemoryTaskManager implements TaskManager {
                     printAllSubtasks();
                     break;
                 case 3:
-                    RemoveAllTasks();
+                    removeAllTasks();
                     break;
                 case 4:
                     System.out.println(Constants.PRINT_TYPE_OF_TASK);
@@ -79,21 +79,21 @@ public class InMemoryTaskManager implements TaskManager {
                     }
                     int typeOf = Integer.parseInt(typeOfTasks);
                     System.out.println(Constants.PRINT_ID);
-                    String taskID = scanner.nextLine();
-                    if (!isNumeric(taskID)) {
+                    String tasksId = scanner.nextLine();
+                    if (!isNumeric(tasksId)) {
                         System.out.println(Constants.PRINT_NUMBER);
                         continue;
                     }
-                    int uniqueNumber = Integer.parseInt(taskID);
+                    int taskId = Integer.parseInt(tasksId);
                     switch (typeOf) {
                         case 1:
-                            takeTask(uniqueNumber);
+                            getTaskById(taskId);
                             break;
                         case 2:
-                            takeEpic(uniqueNumber);
+                            getEpicById(taskId);
                             break;
                         case 3:
-                            takeSubtask(uniqueNumber);
+                            getSubtaskById(taskId);
                             break;
                         default:
                             System.out.println(Constants.NOT_COMMAND);
@@ -102,19 +102,19 @@ public class InMemoryTaskManager implements TaskManager {
                     break;
                 case 5:
                     System.out.println(Constants.CHOOSE_TYPE_FOR_CHANGE);
-                    String var = scanner.nextLine();
-                    if (!isNumeric(var)) {
+                    String variant = scanner.nextLine();
+                    if (!isNumeric(variant)) {
                         System.out.println(Constants.PRINT_NUMBER);
                         continue;
                     }
-                    int variant = Integer.parseInt(var);
+                    int typeForChange = Integer.parseInt(variant);
                     System.out.println(Constants.PRINT_ID);
-                    String uniqueNewID = scanner.nextLine();
-                    if (!isNumeric(uniqueNewID)) {
+                    String changeId = scanner.nextLine();
+                    if (!isNumeric(changeId)) {
                         System.out.println(Constants.PRINT_NUMBER);
                         continue;
                     }
-                    int uniqueID = Integer.parseInt(uniqueNewID);
+                    int newId = Integer.parseInt(changeId);
                     System.out.println(Constants.PRINT_NAME);
                     String newName = scanner.nextLine();
                     System.out.println(Constants.PRINT_DESCRIPTION);
@@ -126,9 +126,9 @@ public class InMemoryTaskManager implements TaskManager {
                         continue;
                     }
                     Status newStatus = Status.valueOf(status1);
-                    switch (variant) {
+                    switch (typeForChange) {
                         case 1:
-                            changeTask(uniqueID, newName, newStatus, newDescription);
+                            changeTask(newId, newName, newStatus, newDescription);
                             break;
                         case 2:
                             System.out.println(Constants.CHOOSE_EPIC);
@@ -138,7 +138,7 @@ public class InMemoryTaskManager implements TaskManager {
                                 continue;
                             }
                             int newEpicID = Integer.parseInt(newEpic);
-                            changeSubtask(uniqueID, newName, newStatus, newDescription, newEpicID);
+                            changeSubtask(newId, newName, newStatus, newDescription, newEpicID);
                             break;
                         default:
                             System.out.println(Constants.NOT_COMMAND);
@@ -162,13 +162,13 @@ public class InMemoryTaskManager implements TaskManager {
                     int IDForDelete = Integer.parseInt(deleteID);
                     switch (pointOfMenu) {
                         case 1:
-                            deleteTask(IDForDelete);
+                            deleteTaskById(IDForDelete);
                             break;
                         case 2:
-                            deleteSubtask(IDForDelete);
+                            deleteSubtaskById(IDForDelete);
                             break;
                         case 3:
-                            deleteEpic(IDForDelete);
+                            deleteEpicById(IDForDelete);
                             break;
                         default:
                             System.out.println(Constants.NOT_COMMAND);
@@ -176,7 +176,14 @@ public class InMemoryTaskManager implements TaskManager {
                     }
                     break;
                 case 7:
-                    printSubtasksForEpic();
+                    System.out.println(Constants.PRINT_EPIC_ID);
+                    String epicsID = scanner.nextLine();
+                    if (!isNumeric(epicsID)) {
+                        System.out.println(Constants.PRINT_NUMBER);
+                        continue;
+                    }
+                    int epicId = Integer.parseInt(epicsID);
+                    printSubtasksForEpic(epicId);
                     break;
                 case 8:
                     System.out.println(Constants.HISTORY);
@@ -198,32 +205,32 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createTask(Task task) {
-        tasks.put(generateID, task);
-        System.out.println(Constants.TASK_CREATED + generateID);
-        ++generateID;
+        tasks.put(generateId, task);
+        System.out.println(Constants.TASK_CREATED + generateId);
+        ++generateId;
     }
 
     @Override
     public void createEpic(Epic epic) {
-        epics.put(generateID, epic);
-        System.out.println(Constants.TASK_CREATED + generateID);
-        ++generateID;
+        epics.put(generateId, epic);
+        System.out.println(Constants.TASK_CREATED + generateId);
+        ++generateId;
     }
 
     @Override
-    public void createSubtask(Subtask subtask, int epicID) {
-        subtasks.put(generateID, subtask);
+    public void createSubtask(Subtask subtask, int epicId) {
+        subtasks.put(generateId, subtask);
         for (Integer key : epics.keySet()) {
-            if (key == epicID) {
-                epics.get(epicID).getSubtaskID().add(generateID);
+            if (key == epicId) {
+                epics.get(epicId).getSubtaskID().add(generateId);
             }
         }
-        System.out.println(Constants.TASK_CREATED + generateID);
-        ++generateID;
+        System.out.println(Constants.TASK_CREATED + generateId);
+        ++generateId;
     }
 
     @Override
-    public void RemoveAllTasks() {
+    public void removeAllTasks() {
         tasks.clear();
         epics.clear();
         subtasks.clear();
@@ -270,14 +277,18 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void printSubtasksForEpic() {
-        for (Epic epic : epics.values()) {
-            System.out.println("Эпику " + epic.getName() + " принадлежат следующие подзадачи: ");
-            for (Integer subtaskID : epic.getSubtaskID()) {
-                for (Integer subtaskKey : subtasks.keySet()) {
-                    if (Objects.equals(subtaskID, subtaskKey)) {
-                        System.out.print(subtaskKey + ". ");
-                        System.out.println(subtasks.get(subtaskKey).toString());
+    public void printSubtasksForEpic(int epicId) {
+        for (Integer k : epics.keySet()) {
+            for (Epic epic : epics.values()) {
+                if (k.equals(epicId)) {
+                    System.out.println("Эпику " + epic.getName() + " принадлежат следующие подзадачи: ");
+                    for (Integer subtaskID : epic.getSubtaskID()) {
+                        for (Integer subtaskKey : subtasks.keySet()) {
+                            if (Objects.equals(subtaskID, subtaskKey)) {
+                                System.out.print(subtaskKey + ". ");
+                                System.out.println(subtasks.get(subtaskKey).toString());
+                            }
+                        }
                     }
                 }
             }
@@ -285,7 +296,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void takeTask(int uniqueNumber) {
+    public void getTaskById(int uniqueNumber) {
         if (!tasks.containsKey(uniqueNumber)) {
             System.out.println(Constants.NOT_FOUND);
             return;
@@ -299,7 +310,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void takeEpic(int uniqueNumber) {
+    public void getEpicById(int uniqueNumber) {
         if (!epics.containsKey(uniqueNumber)) {
             System.out.println(Constants.NOT_FOUND);
         } else {
@@ -313,7 +324,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void takeSubtask(int uniqueNumber) {
+    public void getSubtaskById(int uniqueNumber) {
         if (!subtasks.containsKey(uniqueNumber)) {
             System.out.println(Constants.NOT_FOUND);
             return;
@@ -382,33 +393,33 @@ public class InMemoryTaskManager implements TaskManager {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InMemoryTaskManager manager = (InMemoryTaskManager) o;
-        return generateID == manager.generateID && Objects.equals(tasks, manager.tasks)
+        return generateId == manager.generateId && Objects.equals(tasks, manager.tasks)
                 && Objects.equals(subtasks, manager.subtasks) && Objects.equals(epics, manager.epics);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tasks, subtasks, epics, generateID);
+        return Objects.hash(tasks, subtasks, epics, generateId);
     }
 
     @Override
-    public void deleteTask(int uniqueID) {
-        tasks.remove(uniqueID);
+    public void deleteTaskById(int taskId) {
+        tasks.remove(taskId);
         System.out.println(Constants.TASK_DELETED);
     }
 
     @Override
-    public void deleteSubtask(int uniqueID) {
-        subtasks.remove(uniqueID);
+    public void deleteSubtaskById(int subtaskId) {
+        subtasks.remove(subtaskId);
         System.out.println(Constants.SUBTASK_DELETED);
     }
 
     @Override
-    public void deleteEpic(int uniqueID) {
-        for (Integer k : epics.get(uniqueID).getSubtaskID()) {
+    public void deleteEpicById(int epicId) {
+        for (Integer k : epics.get(epicId).getSubtaskID()) {
             subtasks.remove(k);
         }
-        epics.remove(uniqueID);
+        epics.remove(epicId);
         System.out.println(Constants.EPIC_AND_SUBTASKS_DELETED);
     }
 
