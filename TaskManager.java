@@ -5,16 +5,16 @@ public interface TaskManager {
 
     void createEpic(Epic epic);
 
-    void createSubtask(Subtask subtask, int epicId);
+    void createSubtask(Subtask subtask, int epicID);
 
     //Методы удаления
     void removeAllTasks();
 
-    void deleteTaskById(int taskId);
+    void deleteTaskByID(int taskID);
 
-    void deleteSubtaskById(int subtaskId);
+    void deleteSubtaskByID(int subtaskID);
 
-    void deleteEpicById(int epicId);
+    void deleteEpicByID(int epicID);
 
     //Методы вывода на экран
     void printAllTasks();
@@ -23,14 +23,14 @@ public interface TaskManager {
 
     void printAllSubtasks();
 
-    void printSubtasksForEpic(int epicId);
+    void printSubtasksForEpic(int epicID);
 
     //Методы получения
-    void getTaskById(int uniqueNumber);
+    void getTaskByID(int uniqueNumber);
 
-    void getEpicById(int uniqueNumber);
+    void getEpicByID(int uniqueNumber);
 
-    void getSubtaskById(int uniqueNumber);
+    void getSubtaskByID(int uniqueNumber);
 
     //Методы изменения
     void changeTask(int uniqueID, String newName, Status newStatus, String newDescription);
@@ -39,5 +39,9 @@ public interface TaskManager {
 
     void changeEpic(Epic epic);
 
+    //Методы меню
+    public void printMenu();
+
+    public void menuForDelete();
 
 }

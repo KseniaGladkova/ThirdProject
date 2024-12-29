@@ -1,5 +1,7 @@
-public class Managers {
+public  final class Managers {
+
     private Managers(){}
+
 
 }
 
