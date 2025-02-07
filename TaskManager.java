@@ -23,7 +23,7 @@ public interface TaskManager {
 
     void printAllSubtasks();
 
-    void printSubtasksForEpic(int epicID);
+    void printSubtasksForEpic();
 
     //Методы получения
     void getTaskByID(int uniqueNumber);
@@ -40,8 +40,11 @@ public interface TaskManager {
     void changeEpic(Epic epic);
 
     //Методы меню
-    public void printMenu();
+    void printMenu();
 
-    public void menuForDelete();
+    void menuForDelete();
+
+    //вывести историю просмотров
+    void printHistory();
 
 }

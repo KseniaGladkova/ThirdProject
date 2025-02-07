@@ -1,6 +1,12 @@
-public  final class Managers {
+public class Managers {
 
-    private Managers(){}
+    public static InMemoryTaskManager getInMemoryTaskManager(HistoryManager historyManager) {
+        return new InMemoryTaskManager(historyManager);
+    }
+
+    public static HistoryManager getDefaultHistory() {
+        return new InMemoryHistoryManager();
+    }
 
 
 }

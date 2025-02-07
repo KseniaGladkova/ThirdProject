@@ -39,6 +39,6 @@ public class Constants {
     public static final String SUBTASK_DELETED = "Подзадача удалена";
     public static final String EPIC_AND_SUBTASKS_DELETED = "Эпик и входящие в него подзадачи удалены";
     public static final String HISTORY = "История просмотров: ";
-    public static final String PRINT_EPIC_ID = "Введите идентификатор эпика";
+    public static final String HISTORY_IS_EMPTY = "История просмотров пуста.";
 
 }
