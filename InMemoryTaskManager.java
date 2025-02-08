@@ -418,7 +418,11 @@ public class InMemoryTaskManager implements TaskManager {
             return;
         }
         System.out.println(Constants.HISTORY);
-        System.out.println(history);
+        String historyLine = history.toString();
+        String[] historyArray = historyLine.split(",");
+        for (int i = 0; i < historyArray.length; i++) {
+            System.out.println((i+ 1) + ". " + historyArray[i]);
+        }
     }
 
     @Override

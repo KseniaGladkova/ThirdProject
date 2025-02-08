@@ -2,20 +2,19 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class CustomLinkedList <T extends AllTasks> {
-    public Node<AllTasks> head;
-    public Node<AllTasks> tail;
-    public Node<AllTasks> task;
+    public Node<T> head;
+    public Node<T> tail;
     public int size = 0;
 
-    Map<Integer, Node<AllTasks>> nodes = new HashMap<>();
+    Map<Integer, Node<T>> nodes = new HashMap<>();
 
     public CustomLinkedList() {
         this.head = null;
         this.tail = null;
     }
 
-    public void linkLast(AllTasks task) {
-        Node<AllTasks> node = new Node<>(task);
+    public void linkLast(T task) {
+        Node<T> node = new Node<>(task);
         if (tail == null) {
             head = node;
             tail = node;
@@ -28,7 +27,7 @@ public class CustomLinkedList <T extends AllTasks> {
         nodes.put(task.getId(), node);
     }
 
-    public void removeNode(Node<AllTasks> node) {
+    public void removeNode(Node<T> node) {
         if (node.equals(head)) {
             deleteHead();
         } else if (node.equals(tail)) {
@@ -49,7 +48,7 @@ public class CustomLinkedList <T extends AllTasks> {
             head = null;
             tail = null;
         } else {
-            Node<AllTasks> newHead = head.next;
+            Node<T> newHead = head.next;
             head.next = null;
             newHead.prev = null;
             head = newHead;
@@ -63,7 +62,7 @@ public class CustomLinkedList <T extends AllTasks> {
             head = null;
             tail = null;
         } else {
-            Node<AllTasks> newTail = tail.prev;
+            Node<T> newTail = tail.prev;
             tail.prev = null;
             newTail.next = null;
             tail = newTail;
@@ -80,6 +79,10 @@ public class CustomLinkedList <T extends AllTasks> {
 
     @Override
     public String toString() {
-        return nodes.values() + "";
+        String result = "";
+        for (int i = 0; i <= size ; i++) {
+            result = nodes.values() + ", ";
+        }
+        return result;
     }
 }

@@ -1,12 +1,12 @@
 import java.util.Objects;
 
-public class Node<AllTasks> {
+public class Node<T extends AllTasks> {
 
-    public AllTasks task;
-    public Node<AllTasks> prev;
-    public Node<AllTasks> next;
+    public T task;
+    public Node<T> prev;
+    public Node<T> next;
 
-    public Node(AllTasks task) {
+    public Node(T task) {
         this.task = task;
         this.prev = null;
         this.next = null;
@@ -16,7 +16,7 @@ public class Node<AllTasks> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Node<?> node = (Node<?>) o;
+        Node<T> node = (Node<T>) o;
         return Objects.equals(task, node.task) && Objects.equals(prev, node.prev) && Objects.equals(next, node.next);
     }
 
