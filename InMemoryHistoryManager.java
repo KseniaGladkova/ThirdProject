@@ -1,11 +1,10 @@
-
 public class InMemoryHistoryManager implements HistoryManager {
 
     CustomLinkedList<AllTasks> linkedList = new CustomLinkedList<>();
 
     @Override
     public void add(AllTasks tasks) {
-        if (linkedList.size >= 11) {
+        if (linkedList.size >= 10) {
             linkedList.deleteHead();
         }
         if (linkedList.nodes.containsKey(tasks.getId())) {
@@ -27,5 +26,13 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public CustomLinkedList<AllTasks> getHistory() {
         return linkedList;
+    }
+
+    public String toStringForFiles() {
+        String result = "h;";
+        for (Integer key: linkedList.nodes.keySet()) {
+            result = result + key + ";";
+        }
+        return result;
     }
 }
