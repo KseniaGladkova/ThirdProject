@@ -1,10 +1,14 @@
+package History;
+
+import Tasks.AllTasks;
+
 import java.util.Map;
 import java.util.LinkedHashMap;
 
-public class CustomLinkedList <T extends AllTasks> {
+public class CustomLinkedList<T extends AllTasks> {
     public Node<T> head;
     public Node<T> tail;
-    public int size = 0;
+    private int size;
 
     Map<Integer, Node<T>> nodes = new LinkedHashMap<>();
 
@@ -25,7 +29,6 @@ public class CustomLinkedList <T extends AllTasks> {
         }
         size++;
         nodes.put(task.getId(), node);
-
     }
 
     public void removeNode(Node<T> node) throws NullPointerException {
@@ -41,7 +44,7 @@ public class CustomLinkedList <T extends AllTasks> {
                 size--;
             }
         } catch (NullPointerException exception) {
-           return;
+            return;
         }
     }
 
@@ -92,19 +95,31 @@ public class CustomLinkedList <T extends AllTasks> {
         size = 0;
     }
 
-    public String toStringForFiles() {
-        String result = "";
-        for(Integer key: nodes.keySet()) {
-            result = result + key + ",";
-        }
-        return result;
+    public boolean isEmpty() {
+        return size == 0;
     }
 
-    @Override
-    public String toString() {
+    public boolean containsID(int taskID) {
+        boolean contains = false;
+        for (Integer key : nodes.keySet()) {
+            if (key == taskID) {
+                contains = true;
+                break;
+            }
+        }
+        return contains;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public String returnHistory() {
+        int i = 1;
         String result = "";
-        for (int i = 0; i <= size ; i++) {
-            result = nodes.values() + ",";
+        for (Node<T> node: nodes.values()) {
+            result = result + (i) + ". " + node.task.toString() + "\n";
+            i++;
         }
         return result;
     }

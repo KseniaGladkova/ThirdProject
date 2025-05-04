@@ -1,10 +1,14 @@
+package Tasks;
+
 import java.util.Objects;
+import java.time.Duration;
 
 public class Subtask extends Task {
     private int epicID;
 
-    public Subtask(String name,  Status status, String description, int epicID, int id, TypeOfTask type) {
-        super(name, status, description, id, type);
+    public Subtask(String name, Status status, String description, int epicID, int id, TypeOfTask type,
+                   Duration duration, String startTime) {
+        super(name, status, description, id, type, duration, startTime);
         this.epicID = epicID;
     }
 
@@ -28,7 +32,7 @@ public class Subtask extends Task {
 
     @Override
     public String toStringForFiles() {
-        return super.toStringForFiles() + ";" + epicID;
+        return super.toStringForFiles() + epicID;
     }
 
     @Override

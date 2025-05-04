@@ -1,3 +1,7 @@
+package History;
+
+import Tasks.AllTasks;
+
 import java.util.Objects;
 
 public class Node<T extends AllTasks> {

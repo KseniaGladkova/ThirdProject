@@ -1,10 +1,14 @@
+package Main;
+
+import TasksManagers.*;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws NumberFormatException, NullPointerException, IOException {
+    public static void main(String[] args) throws NumberFormatException, NullPointerException {
         while (true) {
             try {
                 System.out.println(Constants.MENU_FOR_MAIN);
